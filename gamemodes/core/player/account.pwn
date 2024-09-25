@@ -15,7 +15,7 @@ static enum E_ACCOUNT_DATA {
 };
 
 static
-    account[MAX_PLAYERS][E_ACCOUNT_DATA]
+    AccountData[MAX_PLAYERS][E_ACCOUNT_DATA]
 ;
 
 static
@@ -38,19 +38,19 @@ forward OnPlayerPasswordHashCheck(playerid, bool:success);
  */
 
 stock SetAccountDatabaseID(playerid, DBID:id) {
-    account[playerid][E_ACCOUNT_DATABASE_ID] = id;
+    AccountData[playerid][E_ACCOUNT_DATABASE_ID] = id;
 }
 
 stock DBID:GetAccountDatabaseID(playerid) {
-    return account[playerid][E_ACCOUNT_DATABASE_ID];
+    return AccountData[playerid][E_ACCOUNT_DATABASE_ID];
 }
 
 stock SetAccountHash(playerid, const hash[]) {
-    format(account[playerid][E_ACCOUNT_HASH], _, hash);
+    format(AccountData[playerid][E_ACCOUNT_HASH], _, hash);
 }
 
 stock GetAccountHash(playerid, hash[], size = sizeof (hash)) {
-    format(hash, size, account[playerid][E_ACCOUNT_HASH]);
+    format(hash, size, AccountData[playerid][E_ACCOUNT_HASH]);
 }
 
 /**
@@ -115,7 +115,7 @@ hook OnCharacterLogOut(playerid) {
         ACCOUNT_DATA_CLEAN[E_ACCOUNT_DATA]
     ;
 
-    account[playerid] = ACCOUNT_DATA_CLEAN;
+    AccountData[playerid] = ACCOUNT_DATA_CLEAN;
 
     return 1;
 }
@@ -145,7 +145,7 @@ public OnPlayerHashPassword(playerid) {
 }
 
 public OnAccountInsertDatabase(playerid) {
-    account[playerid][E_ACCOUNT_DATABASE_ID] = DBID:cache_insert_id();
+    AccountData[playerid][E_ACCOUNT_DATABASE_ID] = DBID:cache_insert_id();
 
     CallLocalFunction("OnPlayerRegister", "i", playerid);
 
