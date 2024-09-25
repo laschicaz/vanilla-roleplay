@@ -181,25 +181,21 @@ static SavePlayerData(playerid) {
             `characters` \
         SET \
             `money` = %i, \
-            `score` = %i, \
             `skin` = %i, \
             `world` = %i, \
             `interior` = %i, \
-            `wanted` = %i, \
             `health` = %f, \
             `armour` = %f, \
-            `x` = %f, \
-            `y` = %f, \
-            `z` = %f, \
-            `a` = %f \
+            `pos_x` = %f, \
+            `pos_y` = %f, \
+            `pos_z` = %f, \
+            `pos_a` = %f \
         WHERE \
             `id` = %i;",
         GetPlayerMoney(playerid),
-        GetPlayerScore(playerid),
         GetPlayerSkin(playerid),
         GetPlayerVirtualWorld(playerid),
         GetPlayerInterior(playerid),
-        GetPlayerWantedLevel(playerid),
         CharacterLoadData[E_CHARACTER_HEALTH],
         CharacterLoadData[E_CHARACTER_ARMOUR],
         CharacterLoadData[E_CHARACTER_X],
@@ -514,24 +510,20 @@ public OnCharacterRetrieve(playerid, slotid) {
     ;
 
     cache_get_value_int(0, "money", CharacterLoadData[E_CHARACTER_MONEY]);
-    cache_get_value_int(0, "score", CharacterLoadData[E_CHARACTER_SCORE]);
     cache_get_value_int(0, "skin", CharacterLoadData[E_CHARACTER_SKIN_ID]);
     cache_get_value_int(0, "world", CharacterLoadData[E_CHARACTER_WORLD_ID]);
     cache_get_value_int(0, "interior", CharacterLoadData[E_CHARACTER_INTERIOR_ID]);
-    cache_get_value_int(0, "wanted", CharacterLoadData[E_CHARACTER_WANTED]);
     cache_get_value_float(0, "health", CharacterLoadData[E_CHARACTER_HEALTH]);
     cache_get_value_float(0, "armour", CharacterLoadData[E_CHARACTER_ARMOUR]);
-    cache_get_value_float(0, "x", CharacterLoadData[E_CHARACTER_X]);
-    cache_get_value_float(0, "y", CharacterLoadData[E_CHARACTER_Y]);
-    cache_get_value_float(0, "z", CharacterLoadData[E_CHARACTER_Z]);
-    cache_get_value_float(0, "a", CharacterLoadData[E_CHARACTER_A]);
+    cache_get_value_float(0, "pos_x", CharacterLoadData[E_CHARACTER_X]);
+    cache_get_value_float(0, "pos_y", CharacterLoadData[E_CHARACTER_Y]);
+    cache_get_value_float(0, "pos_z", CharacterLoadData[E_CHARACTER_Z]);
+    cache_get_value_float(0, "pos_a", CharacterLoadData[E_CHARACTER_A]);
 
     GivePlayerMoney(playerid, CharacterLoadData[E_CHARACTER_MONEY]);
-    SetPlayerScore(playerid, CharacterLoadData[E_CHARACTER_SCORE]);
     SetPlayerSkin(playerid, CharacterLoadData[E_CHARACTER_SKIN_ID]);
     SetPlayerVirtualWorld(playerid, CharacterLoadData[E_CHARACTER_WORLD_ID]);
     SetPlayerInterior(playerid, CharacterLoadData[E_CHARACTER_INTERIOR_ID]);
-    SetPlayerWantedLevel(playerid, CharacterLoadData[E_CHARACTER_WANTED]);
 
     SetCharacterSpawn(
         playerid,
