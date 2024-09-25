@@ -167,14 +167,14 @@ static SavePlayerData(playerid) {
     ;
 
     new
-        data[E_CHARACTER_LOAD_DATA],
+        CharacterLoadData[E_CHARACTER_LOAD_DATA],
         query[1024]
     ;
 
-    GetPlayerPos(playerid, data[E_CHARACTER_X], data[E_CHARACTER_Y], data[E_CHARACTER_Z]);
-    GetPlayerFacingAngle(playerid, data[E_CHARACTER_A]);
-    GetPlayerHealth(playerid, data[E_CHARACTER_HEALTH]);
-    GetPlayerArmour(playerid, data[E_CHARACTER_ARMOUR]);
+    GetPlayerPos(playerid, CharacterLoadData[E_CHARACTER_X], CharacterLoadData[E_CHARACTER_Y], CharacterLoadData[E_CHARACTER_Z]);
+    GetPlayerFacingAngle(playerid, CharacterLoadData[E_CHARACTER_A]);
+    GetPlayerHealth(playerid, CharacterLoadData[E_CHARACTER_HEALTH]);
+    GetPlayerArmour(playerid, CharacterLoadData[E_CHARACTER_ARMOUR]);
 
     mysql_format(MYSQL_DEFAULT_HANDLE, query, sizeof (query), "\
         UPDATE \
@@ -200,12 +200,12 @@ static SavePlayerData(playerid) {
         GetPlayerVirtualWorld(playerid),
         GetPlayerInterior(playerid),
         GetPlayerWantedLevel(playerid),
-        data[E_CHARACTER_HEALTH],
-        data[E_CHARACTER_ARMOUR],
-        data[E_CHARACTER_X],
-        data[E_CHARACTER_Y],
-        data[E_CHARACTER_Z],
-        data[E_CHARACTER_A],
+        CharacterLoadData[E_CHARACTER_HEALTH],
+        CharacterLoadData[E_CHARACTER_ARMOUR],
+        CharacterLoadData[E_CHARACTER_X],
+        CharacterLoadData[E_CHARACTER_Y],
+        CharacterLoadData[E_CHARACTER_Z],
+        CharacterLoadData[E_CHARACTER_A],
         _:CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID]
     );
 
@@ -294,7 +294,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                         query[64]
                     ;
 
-                    mysql_format(MYSQL_DEFAULT_HANDLE, query, sizeof (query), "SELECT * FROM `characters` WHERE `id` = %i;", _:character[playerid][slotid][E_CHARACTER_DATABASE_ID]);
+                    mysql_format(MYSQL_DEFAULT_HANDLE, query, sizeof (query), "SELECT * FROM `characters` WHERE `id` = %i;", _:CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID]);
                     mysql_tquery(MYSQL_DEFAULT_HANDLE, query, "OnCharacterRetrieve", "ii", playerid, slotid);
                 }
 
@@ -321,14 +321,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             if (strcmp(inputtext, CharacterData[playerid][slotid][E_CHARACTER_NAME])) {
                 ShowPlayerDialog(playerid, DIALOG_CHARACTER_CONFIRM_DELETE, DIALOG_STYLE_INPUT, "Delete Character",
                     "{FFFFFF}Please write the character name (%s) below to confirm the deletion:\n\n{FF0000}Wrong name.",
-                    "Submit", "Back", character[playerid][slotid][E_CHARACTER_NAME]
+                    "Submit", "Back", CharacterData[playerid][slotid][E_CHARACTER_NAME]
                 );
 
                 return 1;
             }
 
             new const
-                DBID:id = character[playerid][slotid][E_CHARACTER_DATABASE_ID]
+                DBID:id = CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID]
             ;
 
             CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = INVALID_DATABASE_ID;
@@ -417,7 +417,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                 query[256]
             ;
 
-            mysql_format(MYSQL_DEFAULT_HANDLE, query, sizeof (query), "INSERT INTO `characters` (`account_id`, `name`, `gender`, `age`, `skin`) VALUES (%i, '%e', %i, %i, %i);", _:GetAccountDatabaseID(playerid), character[playerid][slotid][E_CHARACTER_NAME], playerSelectCharacterGender{playerid}, playerSelectCharacterAge{playerid}, playerSelectCharacterSkin[playerid]);
+            mysql_format(MYSQL_DEFAULT_HANDLE, query, sizeof (query), "INSERT INTO `characters` (`account_id`, `name`, `gender`, `age`, `skin`) VALUES (%i, '%e', %i, %i, %i);", _:GetAccountDatabaseID(playerid), CharacterData[playerid][slotid][E_CHARACTER_NAME], playerSelectCharacterGender{playerid}, playerSelectCharacterAge{playerid}, playerSelectCharacterSkin[playerid]);
             mysql_tquery(MYSQL_DEFAULT_HANDLE, query, "OnCharacterInsertDatabase", "ii", playerid, slotid);
         }
     }
@@ -491,7 +491,7 @@ public OnCharacterNameCheck(playerid, const name[]) {
 }
 
 public OnCharacterInsertDatabase(playerid, slotid) {
-    character[playerid][slotid][E_CHARACTER_DATABASE_ID] = DBID:cache_insert_id();
+    CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = DBID:cache_insert_id();
 
     SetCharacterSpawn(
         playerid,
@@ -510,37 +510,37 @@ public OnCharacterInsertDatabase(playerid, slotid) {
 
 public OnCharacterRetrieve(playerid, slotid) {
     new
-        data[E_CHARACTER_LOAD_DATA]
+        CharacterLoadData[E_CHARACTER_LOAD_DATA]
     ;
 
-    cache_get_value_int(0, "money", data[E_CHARACTER_MONEY]);
-    cache_get_value_int(0, "score", data[E_CHARACTER_SCORE]);
-    cache_get_value_int(0, "skin", data[E_CHARACTER_SKIN_ID]);
-    cache_get_value_int(0, "world", data[E_CHARACTER_WORLD_ID]);
-    cache_get_value_int(0, "interior", data[E_CHARACTER_INTERIOR_ID]);
-    cache_get_value_int(0, "wanted", data[E_CHARACTER_WANTED]);
-    cache_get_value_float(0, "health", data[E_CHARACTER_HEALTH]);
-    cache_get_value_float(0, "armour", data[E_CHARACTER_ARMOUR]);
-    cache_get_value_float(0, "x", data[E_CHARACTER_X]);
-    cache_get_value_float(0, "y", data[E_CHARACTER_Y]);
-    cache_get_value_float(0, "z", data[E_CHARACTER_Z]);
-    cache_get_value_float(0, "a", data[E_CHARACTER_A]);
+    cache_get_value_int(0, "money", CharacterLoadData[E_CHARACTER_MONEY]);
+    cache_get_value_int(0, "score", CharacterLoadData[E_CHARACTER_SCORE]);
+    cache_get_value_int(0, "skin", CharacterLoadData[E_CHARACTER_SKIN_ID]);
+    cache_get_value_int(0, "world", CharacterLoadData[E_CHARACTER_WORLD_ID]);
+    cache_get_value_int(0, "interior", CharacterLoadData[E_CHARACTER_INTERIOR_ID]);
+    cache_get_value_int(0, "wanted", CharacterLoadData[E_CHARACTER_WANTED]);
+    cache_get_value_float(0, "health", CharacterLoadData[E_CHARACTER_HEALTH]);
+    cache_get_value_float(0, "armour", CharacterLoadData[E_CHARACTER_ARMOUR]);
+    cache_get_value_float(0, "x", CharacterLoadData[E_CHARACTER_X]);
+    cache_get_value_float(0, "y", CharacterLoadData[E_CHARACTER_Y]);
+    cache_get_value_float(0, "z", CharacterLoadData[E_CHARACTER_Z]);
+    cache_get_value_float(0, "a", CharacterLoadData[E_CHARACTER_A]);
 
-    GivePlayerMoney(playerid, data[E_CHARACTER_MONEY]);
-    SetPlayerScore(playerid, data[E_CHARACTER_SCORE]);
-    SetPlayerSkin(playerid, data[E_CHARACTER_SKIN_ID]);
-    SetPlayerVirtualWorld(playerid, data[E_CHARACTER_WORLD_ID]);
-    SetPlayerInterior(playerid, data[E_CHARACTER_INTERIOR_ID]);
-    SetPlayerWantedLevel(playerid, data[E_CHARACTER_WANTED]);
+    GivePlayerMoney(playerid, CharacterLoadData[E_CHARACTER_MONEY]);
+    SetPlayerScore(playerid, CharacterLoadData[E_CHARACTER_SCORE]);
+    SetPlayerSkin(playerid, CharacterLoadData[E_CHARACTER_SKIN_ID]);
+    SetPlayerVirtualWorld(playerid, CharacterLoadData[E_CHARACTER_WORLD_ID]);
+    SetPlayerInterior(playerid, CharacterLoadData[E_CHARACTER_INTERIOR_ID]);
+    SetPlayerWantedLevel(playerid, CharacterLoadData[E_CHARACTER_WANTED]);
 
     SetCharacterSpawn(
         playerid,
         slotid,
-        data[E_CHARACTER_SKIN_ID],
-        data[E_CHARACTER_X],
-        data[E_CHARACTER_Y],
-        data[E_CHARACTER_Z],
-        data[E_CHARACTER_A]
+        CharacterLoadData[E_CHARACTER_SKIN_ID],
+        CharacterLoadData[E_CHARACTER_X],
+        CharacterLoadData[E_CHARACTER_Y],
+        CharacterLoadData[E_CHARACTER_Z],
+        CharacterLoadData[E_CHARACTER_A]
     );
 
     return 1;
