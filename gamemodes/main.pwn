@@ -1,4 +1,4 @@
-#define MAX_PLAYERS (2)
+#define MAX_PLAYERS (150)
 
 #include <open.mp>
 #include <mysql>
