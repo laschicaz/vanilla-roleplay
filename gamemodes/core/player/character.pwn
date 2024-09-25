@@ -36,7 +36,7 @@ static enum E_CHARACTER_DATA {
 };
 
 static
-    character[MAX_PLAYERS][MAX_ACCOUNT_CHARACTERS][E_CHARACTER_DATA]
+    CharacterData[MAX_PLAYERS][MAX_ACCOUNT_CHARACTERS][E_CHARACTER_DATA]
 ;
 
 static const
@@ -94,7 +94,7 @@ static ShowCreateCharacterDialog(playerid) {
     ;
 
     foreach (new i: PlayerCharacter[playerid]) {
-        format(menu, sizeof (menu), "%s%s\n", menu, character[playerid][i][E_CHARACTER_NAME]);
+        format(menu, sizeof (menu), "%s%s\n", menu, CharacterData[playerid][i][E_CHARACTER_NAME]);
     }
 
     if (Iter_NonFull(PlayerCharacter[playerid])) {
@@ -136,7 +136,7 @@ static ShowCharacterActionDialog(playerid, slotid) {
     ;
 
     strcat(caption, "Character: ");
-    strcat(caption, character[playerid][slotid][E_CHARACTER_NAME]);
+    strcat(caption, CharacterData[playerid][slotid][E_CHARACTER_NAME]);
 
     ShowPlayerDialog(playerid, DIALOG_CHARACTER_ACTION, DIALOG_STYLE_TABLIST_HEADERS, caption,
         "Select an action for the character:\nEnter with character\nDelete character",
@@ -147,7 +147,7 @@ static ShowCharacterActionDialog(playerid, slotid) {
 static SetCharacterSpawn(playerid, slotid, skinid, Float:x, Float:y, Float:z, Float:a) {
     TogglePlayerSpectating(playerid, false);
     SetSpawnInfo(playerid, NO_TEAM, skinid, x, y, z, a);
-    SetPlayerName(playerid, character[playerid][slotid][E_CHARACTER_NAME]);
+    SetPlayerName(playerid, CharacterData[playerid][slotid][E_CHARACTER_NAME]);
     SetCameraBehindPlayer(playerid);
     SpawnPlayer(playerid);
 
@@ -206,7 +206,7 @@ static SavePlayerData(playerid) {
         data[E_CHARACTER_Y],
         data[E_CHARACTER_Z],
         data[E_CHARACTER_A],
-        _:character[playerid][slotid][E_CHARACTER_DATABASE_ID]
+        _:CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID]
     );
 
     mysql_tquery(MYSQL_DEFAULT_HANDLE, query);
@@ -222,7 +222,7 @@ static ResetPlayerData(playerid) {
     ;
 
     for (new i; i < MAX_ACCOUNT_CHARACTERS; i++) {
-        character[playerid][i] = CHARACTER_DATA_CLEAN;
+        CharacterData[playerid][i] = CHARACTER_DATA_CLEAN;
     }
 
     Iter_Clear(PlayerCharacter[playerid]);
@@ -235,19 +235,19 @@ static ResetPlayerData(playerid) {
  */
 
 stock SetCharacterDatabaseID(playerid, slotid, DBID:id) {
-    character[playerid][slotid][E_CHARACTER_DATABASE_ID] = id;
+    CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = id;
 }
 
 stock DBID:GetCharacterDatabaseID(playerid, slotid) {
-    return character[playerid][slotid][E_CHARACTER_DATABASE_ID];
+    return CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID];
 }
 
 stock SetCharacterName(playerid, slotid, const name[]) {
-    format(character[playerid][slotid][E_CHARACTER_NAME], _, name);
+    format(CharacterData[playerid][slotid][E_CHARACTER_NAME], _, name);
 }
 
 stock GetCharacterName(playerid, slotid, name[], size = sizeof (name)) {
-    format(name, size, character[playerid][slotid][E_CHARACTER_NAME]);
+    format(name, size, CharacterData[playerid][slotid][E_CHARACTER_NAME]);
 }
 
 /**
@@ -301,7 +301,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                 case 1: {
                     ShowPlayerDialog(playerid, DIALOG_CHARACTER_CONFIRM_DELETE, DIALOG_STYLE_INPUT, "Delete Character",
                         "{FFFFFF}Please write the character name (%s) below to confirm the deletion:",
-                        "Submit", "Back", character[playerid][slotid][E_CHARACTER_NAME]
+                        "Submit", "Back", CharacterData[playerid][slotid][E_CHARACTER_NAME]
                     );
                 }
             }
@@ -318,7 +318,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                 slotid = playerSelectCharacterSlotID{playerid}
             ;
 
-            if (strcmp(inputtext, character[playerid][slotid][E_CHARACTER_NAME])) {
+            if (strcmp(inputtext, CharacterData[playerid][slotid][E_CHARACTER_NAME])) {
                 ShowPlayerDialog(playerid, DIALOG_CHARACTER_CONFIRM_DELETE, DIALOG_STYLE_INPUT, "Delete Character",
                     "{FFFFFF}Please write the character name (%s) below to confirm the deletion:\n\n{FF0000}Wrong name.",
                     "Submit", "Back", character[playerid][slotid][E_CHARACTER_NAME]
@@ -331,8 +331,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                 DBID:id = character[playerid][slotid][E_CHARACTER_DATABASE_ID]
             ;
 
-            character[playerid][slotid][E_CHARACTER_DATABASE_ID] = INVALID_DATABASE_ID;
-            character[playerid][slotid][E_CHARACTER_NAME][0] = EOS;
+            CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = INVALID_DATABASE_ID;
+            CharacterData[playerid][slotid][E_CHARACTER_NAME][0] = EOS;
 
             Iter_Remove(PlayerCharacter[playerid], slotid);
 
@@ -453,8 +453,8 @@ public OnCharacterCheck(playerid) {
     ;
 
     for (new i; i < rows; i++) {
-        cache_get_value_int(i, "id", _:character[playerid][i][E_CHARACTER_DATABASE_ID]);
-        cache_get_value(i, "name", character[playerid][i][E_CHARACTER_NAME]);
+        cache_get_value_int(i, "id", _:CharacterData[playerid][i][E_CHARACTER_DATABASE_ID]);
+        cache_get_value(i, "name", CharacterData[playerid][i][E_CHARACTER_NAME]);
 
         Iter_Add(PlayerCharacter[playerid], i);
     }
@@ -478,7 +478,7 @@ public OnCharacterNameCheck(playerid, const name[]) {
         slotid = Iter_Free(PlayerCharacter[playerid])
     ;
 
-    format(character[playerid][slotid][E_CHARACTER_NAME], _, name);
+    format(CharacterData[playerid][slotid][E_CHARACTER_NAME], _, name);
 
     playerSelectCharacterSlotID{playerid} = slotid;
 
