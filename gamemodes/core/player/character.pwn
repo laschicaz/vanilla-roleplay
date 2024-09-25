@@ -17,17 +17,15 @@
 
 static enum _:E_CHARACTER_LOAD_DATA {
     E_CHARACTER_MONEY,
-    E_CHARACTER_SCORE,
     E_CHARACTER_SKIN_ID,
     E_CHARACTER_WORLD_ID,
     E_CHARACTER_INTERIOR_ID,
-    E_CHARACTER_WANTED,
     Float:E_CHARACTER_HEALTH,
     Float:E_CHARACTER_ARMOUR,
-    Float:E_CHARACTER_X,
-    Float:E_CHARACTER_Y,
-    Float:E_CHARACTER_Z,
-    Float:E_CHARACTER_A
+    Float:E_CHARACTER_POS_X,
+    Float:E_CHARACTER_POS_Y,
+    Float:E_CHARACTER_POS_Z,
+    Float:E_CHARACTER_POS_A
 };
 
 static enum E_CHARACTER_DATA {
@@ -198,10 +196,10 @@ static SavePlayerData(playerid) {
         GetPlayerInterior(playerid),
         CharacterLoadData[E_CHARACTER_HEALTH],
         CharacterLoadData[E_CHARACTER_ARMOUR],
-        CharacterLoadData[E_CHARACTER_X],
-        CharacterLoadData[E_CHARACTER_Y],
-        CharacterLoadData[E_CHARACTER_Z],
-        CharacterLoadData[E_CHARACTER_A],
+        CharacterLoadData[E_CHARACTER_POS_X],
+        CharacterLoadData[E_CHARACTER_POS_Y],
+        CharacterLoadData[E_CHARACTER_POS_Z],
+        CharacterLoadData[E_CHARACTER_POS_A],
         _:CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID]
     );
 
