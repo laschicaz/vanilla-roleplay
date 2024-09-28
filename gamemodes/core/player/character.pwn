@@ -55,7 +55,7 @@ static
 ;
 
 new
-    Iterator:PlayerCharacter[MAX_PLAYERS]<MAX_ACCOUNT_CHARACTERS>
+    Iterator:AccountCharacters[MAX_PLAYERS]<MAX_ACCOUNT_CHARACTERS>
 ;
 
 /**
@@ -215,7 +215,7 @@ static ResetPlayerData(playerid) {
         CharacterData[playerid][i] = CHARACTER_DATA_CLEAN;
     }
 
-    Iter_Clear(PlayerCharacter[playerid]);
+    Iter_Clear(AccountCharacters[playerid]);
 
     playerIsLogged{playerid} = false;
 }
@@ -324,7 +324,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = INVALID_DATABASE_ID;
             CharacterData[playerid][slotid][E_CHARACTER_NAME][0] = EOS;
 
-            Iter_Remove(PlayerCharacter[playerid], slotid);
+            Iter_Remove(AccountCharacters[playerid], slotid);
 
             ShowCreateCharacterDialog(playerid);
 
@@ -446,7 +446,7 @@ public OnCharacterCheck(playerid) {
         cache_get_value_int(i, "id", _:CharacterData[playerid][i][E_CHARACTER_DATABASE_ID]);
         cache_get_value(i, "name", CharacterData[playerid][i][E_CHARACTER_NAME]);
 
-        Iter_Add(PlayerCharacter[playerid], i);
+        Iter_Add(AccountCharacters[playerid], i);
     }
 
     ShowCreateCharacterDialog(playerid);
@@ -465,7 +465,7 @@ public OnCharacterNameCheck(playerid, const name[]) {
     }
 
     new const
-        slotid = Iter_Free(PlayerCharacter[playerid])
+        slotid = Iter_Free(AccountCharacters[playerid])
     ;
 
     format(CharacterData[playerid][slotid][E_CHARACTER_NAME], _, name);
@@ -493,7 +493,7 @@ public OnCharacterInsertDatabase(playerid, slotid) {
         DEFAULT_SPAWN_A
     );
 
-    Iter_Add(PlayerCharacter[playerid], slotid);
+    Iter_Add(AccountCharacters[playerid], slotid);
 
     return 1;
 }
