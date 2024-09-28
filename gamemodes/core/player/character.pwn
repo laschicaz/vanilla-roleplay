@@ -15,7 +15,9 @@
 #define DEFAULT_SPAWN_Z             (13.5643)
 #define DEFAULT_SPAWN_A             (270.0000)
 
-static enum _:E_CHARACTER_LOAD_DATA {
+static enum E_CHARACTER_DATA {
+    DBID:E_CHARACTER_DATABASE_ID,
+    E_CHARACTER_NAME[MAX_PLAYER_NAME + 1],
     E_CHARACTER_MONEY,
     E_CHARACTER_SKIN_ID,
     E_CHARACTER_WORLD_ID,
@@ -26,11 +28,6 @@ static enum _:E_CHARACTER_LOAD_DATA {
     Float:E_CHARACTER_POS_Y,
     Float:E_CHARACTER_POS_Z,
     Float:E_CHARACTER_POS_A
-};
-
-static enum E_CHARACTER_DATA {
-    DBID:E_CHARACTER_DATABASE_ID,
-    E_CHARACTER_NAME[MAX_PLAYER_NAME + 1]
 };
 
 static
@@ -165,14 +162,13 @@ static SavePlayerData(playerid) {
     ;
 
     new
-        CharacterLoadData[E_CHARACTER_LOAD_DATA],
         query[1024]
     ;
 
-    GetPlayerPos(playerid, CharacterLoadData[E_CHARACTER_X], CharacterLoadData[E_CHARACTER_Y], CharacterLoadData[E_CHARACTER_Z]);
-    GetPlayerFacingAngle(playerid, CharacterLoadData[E_CHARACTER_A]);
-    GetPlayerHealth(playerid, CharacterLoadData[E_CHARACTER_HEALTH]);
-    GetPlayerArmour(playerid, CharacterLoadData[E_CHARACTER_ARMOUR]);
+    GetPlayerPos(playerid, CharacterData[playerid][slotid][E_CHARACTER_X], CharacterLoadData[E_CHARACTER_Y], CharacterLoadData[E_CHARACTER_Z]);
+    GetPlayerFacingAngle(playerid, CharacterData[playerid][slotid][E_CHARACTER_A]);
+    GetPlayerHealth(playerid, CharacterData[playerid][slotid][E_CHARACTER_HEALTH]);
+    GetPlayerArmour(playerid, CharacterData[playerid][slotid][E_CHARACTER_ARMOUR]);
 
     mysql_format(MYSQL_DEFAULT_HANDLE, query, sizeof (query), "\
         UPDATE \
@@ -194,12 +190,12 @@ static SavePlayerData(playerid) {
         GetPlayerSkin(playerid),
         GetPlayerVirtualWorld(playerid),
         GetPlayerInterior(playerid),
-        CharacterLoadData[E_CHARACTER_HEALTH],
-        CharacterLoadData[E_CHARACTER_ARMOUR],
-        CharacterLoadData[E_CHARACTER_POS_X],
-        CharacterLoadData[E_CHARACTER_POS_Y],
-        CharacterLoadData[E_CHARACTER_POS_Z],
-        CharacterLoadData[E_CHARACTER_POS_A],
+        CharacterData[playerid][slotid][E_CHARACTER_HEALTH],
+        CharacterData[playerid][slotid][E_CHARACTER_ARMOUR],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_X],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_Y],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_Z],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_A],
         _:CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID]
     );
 
@@ -503,34 +499,31 @@ public OnCharacterInsertDatabase(playerid, slotid) {
 }
 
 public OnCharacterRetrieve(playerid, slotid) {
-    new
-        CharacterLoadData[E_CHARACTER_LOAD_DATA]
-    ;
 
-    cache_get_value_int(0, "money", CharacterLoadData[E_CHARACTER_MONEY]);
-    cache_get_value_int(0, "skin", CharacterLoadData[E_CHARACTER_SKIN_ID]);
-    cache_get_value_int(0, "world", CharacterLoadData[E_CHARACTER_WORLD_ID]);
-    cache_get_value_int(0, "interior", CharacterLoadData[E_CHARACTER_INTERIOR_ID]);
-    cache_get_value_float(0, "health", CharacterLoadData[E_CHARACTER_HEALTH]);
-    cache_get_value_float(0, "armour", CharacterLoadData[E_CHARACTER_ARMOUR]);
-    cache_get_value_float(0, "pos_x", CharacterLoadData[E_CHARACTER_X]);
-    cache_get_value_float(0, "pos_y", CharacterLoadData[E_CHARACTER_Y]);
-    cache_get_value_float(0, "pos_z", CharacterLoadData[E_CHARACTER_Z]);
-    cache_get_value_float(0, "pos_a", CharacterLoadData[E_CHARACTER_A]);
+    cache_get_value_int(0, "money", CharacterData[playerid][slotid][E_CHARACTER_MONEY]);
+    cache_get_value_int(0, "skin", CharacterData[playerid][slotid][E_CHARACTER_SKIN_ID]);
+    cache_get_value_int(0, "world", CharacterData[playerid][slotid][E_CHARACTER_WORLD_ID]);
+    cache_get_value_int(0, "interior", CharacterData[playerid][slotid][E_CHARACTER_INTERIOR_ID]);
+    cache_get_value_float(0, "health", CharacterData[playerid][slotid][E_CHARACTER_HEALTH]);
+    cache_get_value_float(0, "armour", CharacterData[playerid][slotid][E_CHARACTER_ARMOUR]);
+    cache_get_value_float(0, "pos_x", CharacterData[playerid][slotid][E_CHARACTER_POS_X]);
+    cache_get_value_float(0, "pos_y", CharacterData[playerid][slotid][E_CHARACTER_POS_Y]);
+    cache_get_value_float(0, "pos_z", CharacterData[playerid][slotid][E_CHARACTER_POS_Z]);
+    cache_get_value_float(0, "pos_a", CharacterData[playerid][slotid][E_CHARACTER_POS_A]);
 
-    GivePlayerMoney(playerid, CharacterLoadData[E_CHARACTER_MONEY]);
-    SetPlayerSkin(playerid, CharacterLoadData[E_CHARACTER_SKIN_ID]);
-    SetPlayerVirtualWorld(playerid, CharacterLoadData[E_CHARACTER_WORLD_ID]);
-    SetPlayerInterior(playerid, CharacterLoadData[E_CHARACTER_INTERIOR_ID]);
+    GivePlayerMoney(playerid, CharacterData[playerid][slotid][E_CHARACTER_MONEY]);
+    SetPlayerSkin(playerid, CharacterData[playerid][slotid][E_CHARACTER_SKIN_ID]);
+    SetPlayerVirtualWorld(playerid, CharacterData[playerid][slotid][E_CHARACTER_WORLD_ID]);
+    SetPlayerInterior(playerid, CharacterData[playerid][slotid][E_CHARACTER_INTERIOR_ID]);
 
     SetCharacterSpawn(
         playerid,
         slotid,
-        CharacterLoadData[E_CHARACTER_SKIN_ID],
-        CharacterLoadData[E_CHARACTER_X],
-        CharacterLoadData[E_CHARACTER_Y],
-        CharacterLoadData[E_CHARACTER_Z],
-        CharacterLoadData[E_CHARACTER_A]
+        CharacterData[playerid][slotid][E_CHARACTER_SKIN_ID],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_X],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_Y],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_Z],
+        CharacterData[playerid][slotid][E_CHARACTER_POS_A]
     );
 
     return 1;
