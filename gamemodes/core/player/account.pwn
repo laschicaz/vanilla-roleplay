@@ -37,19 +37,19 @@ forward OnPlayerPasswordHashCheck(playerid, bool:success);
  * # External
  */
 
-stock SetAccountDatabaseID(playerid, DBID:id) {
+stock Account_SetDatabaseID(playerid, DBID:id) {
     AccountData[playerid][E_ACCOUNT_DATABASE_ID] = id;
 }
 
-stock DBID:GetAccountDatabaseID(playerid) {
+stock DBID:Account_GetDatabaseID(playerid) {
     return AccountData[playerid][E_ACCOUNT_DATABASE_ID];
 }
 
-stock SetAccountHash(playerid, const hash[]) {
+stock Account_SetHash(playerid, const hash[]) {
     format(AccountData[playerid][E_ACCOUNT_HASH], _, hash);
 }
 
-stock GetAccountHash(playerid, hash[], size = sizeof (hash)) {
+stock Account_GetHash(playerid, hash[], size = sizeof (hash)) {
     format(hash, size, AccountData[playerid][E_ACCOUNT_HASH]);
 }
 
