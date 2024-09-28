@@ -1,3 +1,7 @@
+/**
+ * # Header
+ */
+
 #define COLOR_BLUE			(0x5999D1FF)
 #define COLOR_INFO			(0x9ACD32AA) // 9ACD32 - olive green
 #define COLOR_SECURITY 		(0xD68924FF)
