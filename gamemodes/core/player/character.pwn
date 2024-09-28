@@ -85,44 +85,44 @@ static Character_CheckDatabase(playerid) {
 
 static ShowCreateCharacterDialog(playerid) {
     new
-        menu[MAX_PLAYER_NAME * MAX_ACCOUNT_CHARACTERS + 32] = "Select or create a character:\n"
+        menu[MAX_PLAYER_NAME * MAX_ACCOUNT_CHARACTERS + 32] = "Выберите или создайте персонажа:\n"
     ;
 
-    foreach (new i: PlayerCharacter[playerid]) {
+    foreach (new i: AccountCharacters[playerid]) {
         format(menu, sizeof (menu), "%s%s\n", menu, CharacterData[playerid][i][E_CHARACTER_NAME]);
     }
 
-    if (Iter_NonFull(PlayerCharacter[playerid])) {
-        strcat(menu, "{98FB98}+ Create character");
+    if (Iter_NonFull(AccountCharacters[playerid])) {
+        strcat(menu, "{98FB98}+ Создать персонажа");
     }
 
-    ShowPlayerDialog(playerid, DIALOG_CHARACTER_SELECTION, DIALOG_STYLE_TABLIST_HEADERS, "Character Selection", menu, "Select", "Leave");
+    ShowPlayerDialog(playerid, DIALOG_CHARACTER_SELECTION, DIALOG_STYLE_TABLIST_HEADERS, "Character Selection", menu, "Выбрать", "Отменить");
 }
 
 static SelectCharacterAgeDialog(playerid) {
     new
-        menu[128] = "Select your character's age:\n"
+        menu[128] = "Выберите возраст своего персонажа:\n"
     ;
 
     for (new i = MIN_CHARACTER_AGE; i <= MAX_CHARACTER_AGE; i++) {
         format(menu, sizeof (menu), "%s%i\n", menu, i);
     }
 
-    strcat(menu, "Other");
+    strcat(menu, "Другое");
 
-    ShowPlayerDialog(playerid, DIALOG_CHARACTER_AGE_CREATION, DIALOG_STYLE_TABLIST_HEADERS, "Character Age", menu, "Next", "Back");
+    ShowPlayerDialog(playerid, DIALOG_CHARACTER_AGE_CREATION, DIALOG_STYLE_TABLIST_HEADERS, "Возраст персонажа", menu, "Далее", "Назад");
 }
 
 static SelectCharacterSkinDialog(playerid) {
     new
-        menu[128] = "Select your character's skin:\n"
+        menu[128] = "Выберите скин своего персонажа:\n"
     ;
 
     for (new i, size = sizeof (characterDefaultSkinList); i < size; i++) {
-        format(menu, sizeof (menu), "%s%s: %i\n", menu, characterDefaultSkinList[i][0] ? "Female" : "Male", characterDefaultSkinList[i][1]);
+        format(menu, sizeof (menu), "%s%s: %i\n", menu, characterDefaultSkinList[i][0] ? "Женский" : "Мужской", characterDefaultSkinList[i][1]);
     }
 
-    ShowPlayerDialog(playerid, DIALOG_CHARACTER_SKIN_CREATION, DIALOG_STYLE_TABLIST_HEADERS, "Character Skin", menu, "Finish", "Back");
+    ShowPlayerDialog(playerid, DIALOG_CHARACTER_SKIN_CREATION, DIALOG_STYLE_TABLIST_HEADERS, "Скин персонажа", menu, "Далее", "Назад");
 }
 
 static ShowCharacterActionDialog(playerid, slotid) {
@@ -130,12 +130,12 @@ static ShowCharacterActionDialog(playerid, slotid) {
         caption[16 + MAX_PLAYER_NAME]
     ;
 
-    strcat(caption, "Character: ");
+    strcat(caption, "Персонаж ");
     strcat(caption, CharacterData[playerid][slotid][E_CHARACTER_NAME]);
 
     ShowPlayerDialog(playerid, DIALOG_CHARACTER_ACTION, DIALOG_STYLE_TABLIST_HEADERS, caption,
-        "Select an action for the character:\nEnter with character\nDelete character",
-        "Select", "Back"
+	        "Выберите действие с персонажем:\nАвторизоваться за персонажа\nУдалить персонажа",
+        "Выбрать", "Отклонить"
     );
 }
 
@@ -252,7 +252,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                 return 1;
             }
 
-            if (!Iter_Contains(PlayerCharacter[playerid], listitem)) {
+            if (!Iter_Contains(AccountCharacters[playerid], listitem)) {
                 ShowPlayerDialog(playerid, DIALOG_CHARACTER_NAME_CREATION, DIALOG_STYLE_INPUT, "Character Creation",
                     "{FFFFFF}Ok {98FB98}%s{FFFFFF},\n{FFFFFF}Choose a name to create a new character:",
                     "Next", "Back", ReturnPlayerName(playerid)
