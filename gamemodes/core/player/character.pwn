@@ -74,7 +74,7 @@ forward OnCharacterInsertDatabase(playerid, slotid);
  * # Internal
  */
 
-static CheckCharacterDatabase(playerid) {
+static Character_CheckDatabase(playerid) {
     new
         query[128]
     ;
@@ -139,7 +139,7 @@ static ShowCharacterActionDialog(playerid, slotid) {
     );
 }
 
-static SetCharacterSpawn(playerid, slotid, skinid, Float:x, Float:y, Float:z, Float:a) {
+static Character_SetSpawn(playerid, slotid, skinid, Float:x, Float:y, Float:z, Float:a) {
     TogglePlayerSpectating(playerid, false);
     SetSpawnInfo(playerid, NO_TEAM, skinid, x, y, z, a);
     SetPlayerName(playerid, CharacterData[playerid][slotid][E_CHARACTER_NAME]);
@@ -152,7 +152,7 @@ static SetCharacterSpawn(playerid, slotid, skinid, Float:x, Float:y, Float:z, Fl
     CallLocalFunction("OnCharacterSpawn", "i", playerid);
 }
 
-static SavePlayerData(playerid) {
+static Character_SaveData(playerid) {
     if (!playerIsLogged{playerid}) {
         return;   
     }
@@ -201,12 +201,11 @@ static SavePlayerData(playerid) {
 
     mysql_tquery(MYSQL_DEFAULT_HANDLE, query);
 
-    ResetPlayerData(playerid);
-
+    Character_ResetData(playerid);
     CallLocalFunction("OnCharacterLogOut", "i", playerid);
 }
 
-static ResetPlayerData(playerid) {
+static Character_ResetData(playerid) {
     static const
         CHARACTER_DATA_CLEAN[E_CHARACTER_DATA]
     ;
@@ -224,19 +223,19 @@ static ResetPlayerData(playerid) {
  * # External
  */
 
-stock SetCharacterDatabaseID(playerid, slotid, DBID:id) {
+stock Character_SetDatabaseID(playerid, slotid, DBID:id) {
     CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = id;
 }
 
-stock DBID:GetCharacterDatabaseID(playerid, slotid) {
+stock DBID:Character_GetDatabaseID(playerid, slotid) {
     return CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID];
 }
 
-stock SetCharacterName(playerid, slotid, const name[]) {
+stock Character_SetName(playerid, slotid, const name[]) {
     format(CharacterData[playerid][slotid][E_CHARACTER_NAME], _, name);
 }
 
-stock GetCharacterName(playerid, slotid, name[], size = sizeof (name)) {
+stock Character_GetName(playerid, slotid, name[], size = sizeof (name)) {
     format(name, size, CharacterData[playerid][slotid][E_CHARACTER_NAME]);
 }
 
@@ -416,19 +415,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 }
 
 hook OnPlayerLogIn(playerid) {
-    CheckCharacterDatabase(playerid);
+    Character_CheckDatabase(playerid);
     
     return 1;
 }
 
 hook OnPlayerRegister(playerid) {
-    CheckCharacterDatabase(playerid);
+    Character_CheckDatabase(playerid);
     
     return 1;
 }
 
 hook OnPlayerDisconnect(playerid, reason) {
-    SavePlayerData(playerid);
+    Character_SaveData(playerid);
 
     return 1;
 }
@@ -483,7 +482,7 @@ public OnCharacterNameCheck(playerid, const name[]) {
 public OnCharacterInsertDatabase(playerid, slotid) {
     CharacterData[playerid][slotid][E_CHARACTER_DATABASE_ID] = DBID:cache_insert_id();
 
-    SetCharacterSpawn(
+    Character_SetSpawn(
         playerid,
         slotid,
         playerSelectCharacterSkin[playerid],
@@ -516,7 +515,7 @@ public OnCharacterRetrieve(playerid, slotid) {
     SetPlayerVirtualWorld(playerid, CharacterData[playerid][slotid][E_CHARACTER_WORLD_ID]);
     SetPlayerInterior(playerid, CharacterData[playerid][slotid][E_CHARACTER_INTERIOR_ID]);
 
-    SetCharacterSpawn(
+    Character_SetSpawn(
         playerid,
         slotid,
         CharacterData[playerid][slotid][E_CHARACTER_SKIN_ID],
