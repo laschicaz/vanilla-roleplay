@@ -23,8 +23,13 @@ stock MySQL:MySQL_GetHandle() {
  */
 
 hook OnGameModeInit() {
-    handle = mysql_connect("localhost", "root", "", "base");
+    handle = mysql_connect("localhost", "root", "root", "new");
 
+    if(mysql_errno(handle   ) != 0)
+        return print("* [Database] Could not connect to database.\n");
+	
+    print("* [Database] Connected to database.");
+    
     return 1;
 }
 

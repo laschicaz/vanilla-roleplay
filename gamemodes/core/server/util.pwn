@@ -9,7 +9,7 @@ forward DelayedKickInternal(playerid);
  */
 
 stock DelayedKick(playerid, const reason[]) {
-    SendClientMessage(playerid, -1, "You have been kicked out of the server. Reason: %s.", reason);
+    SendClientMessage(playerid, COLOR_ERROR, "* %s отключил(-а) Вас от сервера по причине: %s.", GAMEMODE_NAME, reason);
 
     TogglePlayerSpectating(playerid, true);
     

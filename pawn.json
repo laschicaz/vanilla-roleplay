@@ -1,0 +1,36 @@
+{
+	"user": "laschicaz",
+	"repo": "vanilla-roleplay",
+	"tag": "0.0.1",
+	"entry": "gamemodes\\main.pwn",
+	"output": "gamemodes\\main.amx",
+	"dependencies": [
+		"pawn-lang/samp-stdlib",
+		"Sreyas-Sreelal/samp-bcrypt:0.4.1",
+		"pBlueG/SA-MP-MySQL:R41-4",
+		"pawn-lang/YSI-Includes:v5.10.0006",
+		"katursis/Pawn.CMD:3.4.0-omp",
+		"Y-Less/sscanf:v2.13.8"
+
+	],
+	"runtime": {
+		"mode": "y_testing"
+	},
+	"builds": [
+		{
+			"name": "main",
+			"args": [
+				"-;+",
+				"-(+",
+				"-d3"
+			],
+			"includes": [
+				"legacy"
+			],
+			"compiler": {
+				"version": "3.10.10"
+			}
+		}
+	]
+}
+
