@@ -1,4 +1,5 @@
 # Vanilla Roleplay
+Vanilla Roleplay is a basic framework for roleplay servers.
 
 # Requirements
 
