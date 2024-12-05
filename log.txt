@@ -5950,3 +5950,15 @@ Loaded 22 component(s) from C:\Users\daddy\vanilla-roleplay\components
 [2024-12-03T21:38:50+0300] [Info]  
 [2024-12-03T21:38:50+0300] [Info]  
 [2024-12-03T21:38:50+0300] [Info] * Vanilla 0.1 started...
+[2024-12-03T21:38:58+0300] [Info] * [Database] Connected to database.
+[2024-12-03T21:38:58+0300] [Info] Legacy Network started on port 7777
+[2024-12-03T21:39:09+0300] [Warning] Couldn't announce legacy network to open.mp list.
+[2024-12-03T21:39:09+0300] [Warning] 	 Status: 406
+[2024-12-03T21:39:09+0300] [Warning] 	 Message: {"error":"failed to query server: socket read timed out"}
+[2024-12-03T21:39:09+0300] [Warning] This won't affect the server's behaviour.
+[2024-12-03T21:39:09+0300] [Info] [connection] incoming connection: 127.0.0.1:54410 id: 0
+[2024-12-03T21:39:09+0300] [Info] [join] Bobby_LaPlame has joined the server (0:127.0.0.1)
+[2024-12-03T21:39:21+0300] [Info] [part] Bobby_LaPlame has left the server (0:1)
+[2024-12-03T21:39:35+0300] [Info] [connection] incoming connection: 127.0.0.1:51539 id: 0
+[2024-12-03T21:39:35+0300] [Info] [join] Bobby_LaPlame has joined the server (0:127.0.0.1)
+[2024-12-03T21:40:26+0300] [Info] [chat] [Bobby_LaPlame]: tsaas
