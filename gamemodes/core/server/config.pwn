@@ -8,13 +8,16 @@
 #define GAMEMODE_NAME                       "Vanilla Roleplay"
 #define	GAMEMODE_VERSION  				    "Vanilla 0.1"
 
+#define MESSAGE_PREFIX						"->"
+#define NULL                    			"\1"
+
 /**
  * # Hooks
  */
 
 hook OnGameModeInit()
 {
-	print("* "GAMEMODE_VERSION" started...");
+	print(""MESSAGE_PREFIX" "GAMEMODE_VERSION" запущен...");
 
     DisableInteriorEnterExits(); 
     AllowInteriorWeapons(false);

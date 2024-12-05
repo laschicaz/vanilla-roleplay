@@ -11,7 +11,7 @@ static
 
 static Action_SendPlayerMe(playerid, const text[144], bool:islow = false) {
 	if (!IsPlayerSpawned(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "* ¬ы должны авторизоватьс€, прежде чем использовать чат.");
+		SendClientMessage(playerid, COLOR_ERROR, ""MESSAGE_PREFIX" ¬ы должны авторизоватьс€, прежде чем использовать чат.");
         return 0;
     }
 
@@ -31,7 +31,7 @@ static Action_SendPlayerMe(playerid, const text[144], bool:islow = false) {
 
 static Action_SendPlayerDo(playerid, const text[144], bool:islow = false) {
 	if (!IsPlayerSpawned(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "* ¬ы должны авторизоватьс€, прежде чем использовать чат.");
+		SendClientMessage(playerid, COLOR_ERROR, ""MESSAGE_PREFIX" ¬ы должны авторизоватьс€, прежде чем использовать чат.");
         return 0;
     }
 
@@ -58,7 +58,7 @@ CMD:me(playerid, params[]) {
         text[144];
 
 	if (sscanf(params, "s[144]", text)) 
-		return SendClientMessage(playerid, COLOR_GRAD0, "* /me [текст]");
+		return SendClientMessage(playerid, COLOR_GRAD0, ""MESSAGE_PREFIX" /me [текст]");
 
 	Action_SendPlayerMe(playerid, text);
 	return 1;
@@ -69,7 +69,7 @@ CMD:melow(playerid, params[]) {
         text[144];
 
 	if (sscanf(params, "s[144]", text)) 
-		return SendClientMessage(playerid, COLOR_GRAD0, "* /melow [текст]");
+		return SendClientMessage(playerid, COLOR_GRAD0, ""MESSAGE_PREFIX" /melow [текст]");
 
 	Action_SendPlayerMe(playerid, text, true);
 	return 1;
@@ -81,7 +81,7 @@ CMD:do(playerid, params[]) {
 		text[144];
 
 	if (sscanf(params, "s[144]", text)) 
-		return SendClientMessage(playerid, COLOR_GRAD0, "* /do [текст]");
+		return SendClientMessage(playerid, COLOR_GRAD0, ""MESSAGE_PREFIX" /do [текст]");
 
 
 	Action_SendPlayerDo(playerid, text);
@@ -93,7 +93,7 @@ CMD:dolow(playerid, params[]) {
 		text[144];
 
 	if (sscanf(params, "s[144]", text)) 
-		return SendClientMessage(playerid, COLOR_GRAD0, "* /dolow [текст]");
+		return SendClientMessage(playerid, COLOR_GRAD0, ""MESSAGE_PREFIX" /dolow [текст]");
 
 
 	Action_SendPlayerDo(playerid, text, true);
@@ -105,13 +105,13 @@ CMD:my(playerid, params[]) {
 		text[144];
 
 	if (sscanf(params, "s[144]", text)) 
-		return SendClientMessage(playerid, COLOR_GRAD0, "* /my [текст]");
+		return SendClientMessage(playerid, COLOR_GRAD0, ""MESSAGE_PREFIX" /my [текст]");
 
 	new 
 		string[256];
 
 	format(string, sizeof(string), " %s", text);
-	ProxDetectorEx(playerid, 30.0, COLOR_ACTION, "* ”", string, .autospacing=false);
+	ProxDetectorEx(playerid, 30.0, COLOR_ACTION, ""MESSAGE_PREFIX" ”", string, .autospacing=false);
 
 	return true;
 }

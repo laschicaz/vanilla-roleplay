@@ -1,8 +1,8 @@
-#include <YSI_Coding\y_hooks>
-
 /**
  * # Header
  */
+ 
+#include <YSI_Coding\y_hooks>
 
 #define INVALID_DATABASE_ID (DBID:0)
 
@@ -26,9 +26,9 @@ hook OnGameModeInit() {
     handle = mysql_connect("localhost", "root", "root", "new");
 
     if(mysql_errno(handle   ) != 0)
-        return print("* [Database] Could not connect to database.\n");
+        return print(""MESSAGE_PREFIX" [Database] Не удалось подключиться к базе данных.\n");
 	
-    print("* [Database] Connected to database.");
+    print(""MESSAGE_PREFIX" [Database] Успешно подключено к базе данных.");
     
     return 1;
 }

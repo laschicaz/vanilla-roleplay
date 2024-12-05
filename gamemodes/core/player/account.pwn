@@ -1,7 +1,7 @@
 /**
  * # Header
  */
- 
+
 #include <YSI_Coding\y_hooks>
 
 #define MAX_LOGIN_ATTEMPTS          (5)
@@ -11,19 +11,19 @@
 
 enum E_ACCOUNT_DATA {
     DBID:E_ACCOUNT_DATABASE_ID,
+
     E_ACCOUNT_NAME[MAX_PLAYER_NAME],
     E_ACCOUNT_HASH[BCRYPT_HASH_LENGTH],
+
     bool:E_ACCOUNT_LOGGED,
-    E_ACCOUNT_ACTIVE_CHARACTER
+    E_ACCOUNT_LOGGED_CHARACTER
 };
 
 new
-    AccountData[MAX_PLAYERS][E_ACCOUNT_DATA]
-;
+    AccountData[MAX_PLAYERS][E_ACCOUNT_DATA];
 
 static
-    playerLoginAttemptCount[MAX_PLAYERS char]
-;
+    playerLoginAttemptCount[MAX_PLAYERS char];
 
 /**
  * # Forwards
@@ -66,6 +66,9 @@ stock Account_GetName(playerid) {
     format(name, sizeof(name), AccountData[playerid][E_ACCOUNT_NAME]);
     return name;
 }
+
+stock Account_GetLoggedCharacter(playerid)
+    return AccountData[playerid][E_ACCOUNT_LOGGED_CHARACTER];
 
 /**
  * # Hooks
@@ -131,8 +134,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
 hook OnCharacterLogOut(playerid) {
     static const
-        ACCOUNT_DATA_CLEAN[E_ACCOUNT_DATA]
-    ;
+        ACCOUNT_DATA_CLEAN[E_ACCOUNT_DATA];
 
     AccountData[playerid] = ACCOUNT_DATA_CLEAN;
 
@@ -152,8 +154,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 public OnPlayerHashPassword(playerid) {
     new
         hash[BCRYPT_HASH_LENGTH],
-        query[256]
-    ;
+        query[256];
 
     bcrypt_get_hash(hash);
 

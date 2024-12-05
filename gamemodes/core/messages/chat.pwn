@@ -1,16 +1,16 @@
 /**
  * # Header
  */
- 
+
 #include <YSI_Coding\y_hooks>
 
 /**
  * # External
  */
 
-Chat_SendPlayerText(playerid, text[]) {
+stock Chat_SendPlayerText(playerid, text[]) {
 	if (!IsPlayerSpawned(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "* Вы должны авторизоваться, прежде чем использовать чат.");
+		SendClientMessage(playerid, COLOR_ERROR, ""MESSAGE_PREFIX" Вы должны авторизоваться, прежде чем использовать чат.");
 		return 0;
 	}
 	

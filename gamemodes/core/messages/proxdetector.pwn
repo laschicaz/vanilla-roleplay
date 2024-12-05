@@ -33,34 +33,34 @@ ProxDetectorEx(playerid, Float:max_range, color, const prefix[], const string[],
 
 		if (strlen(prefix) < 1) {
 			if (autospacing) {
-				if (showid) format(prox, sizeof(prox), "(%d) %s{%06x} %s", playerid, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
-				else format(prox, sizeof(prox), "%s{%06x} %s", Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
+				if (showid) format(prox, sizeof(prox), "(%d) %s{%06x} %s", playerid, Character_GetName(playerid), (final_color >>> 8), string);
+				else format(prox, sizeof(prox), "%s{%06x} %s", Character_GetName(playerid), (final_color >>> 8), string);
 
 				if (inverted) {
-					format(prox, sizeof(prox), "%s ((%s{%06x}))", string, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8));
+					format(prox, sizeof(prox), "%s ((%s{%06x}))", string, Character_GetName(playerid), (final_color >>> 8));
 				}
 			} else {
-				if (showid) format(prox, sizeof(prox), "(%d) %s{%06x}%s", playerid, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
-				else format(prox, sizeof(prox), "%s{%06x}%s", Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
+				if (showid) format(prox, sizeof(prox), "(%d) %s{%06x}%s", playerid, Character_GetName(playerid), (final_color >>> 8), string);
+				else format(prox, sizeof(prox), "%s{%06x}%s", Character_GetName(playerid), (final_color >>> 8), string);
 
 				if (inverted) {
-					format(prox, sizeof(prox), "%s ((%s{%06x}))", string, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8));
+					format(prox, sizeof(prox), "%s ((%s{%06x}))", string, Character_GetName(playerid), (final_color >>> 8));
 				}
 			}
 		} else {
 			if (autospacing) {
-				if (showid) format(prox, sizeof(prox), "%s (%d) %s{%06x} %s", prefix, playerid, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
-				else format(prox, sizeof(prox), "%s %s{%06x} %s", prefix, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
+				if (showid) format(prox, sizeof(prox), "%s (%d) %s{%06x} %s", prefix, playerid, Character_GetName(playerid), (final_color >>> 8), string);
+				else format(prox, sizeof(prox), "%s %s{%06x} %s", prefix, Character_GetName(playerid), (final_color >>> 8), string);
 
 				if (inverted) {
-					format(prox, sizeof(prox), "%s %s ((%s{%06x})) %s", prefix, string, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8));
+					format(prox, sizeof(prox), "%s %s ((%s{%06x})) %s", prefix, string, Character_GetName(playerid), (final_color >>> 8));
 				}
 			} else {
-				if (showid) format(prox, sizeof(prox), "%s (%d) %s{%06x}%s", prefix, playerid, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
-				else format(prox, sizeof(prox), "%s %s{%06x}%s", prefix, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8), string);
+				if (showid) format(prox, sizeof(prox), "%s (%d) %s{%06x}%s", prefix, playerid, Character_GetName(playerid), (final_color >>> 8), string);
+				else format(prox, sizeof(prox), "%s %s{%06x}%s", prefix, Character_GetName(playerid), (final_color >>> 8), string);
 
 				if (inverted) {
-					format(prox, sizeof(prox), "%s %s ((%s{%06x}))", prefix, string, Character_GetName(playerid, AccountData[playerid][E_ACCOUNT_ACTIVE_CHARACTER]), (final_color >>> 8));
+					format(prox, sizeof(prox), "%s %s ((%s{%06x}))", prefix, string, Character_GetName(playerid), (final_color >>> 8));
 				}
 			}
 		}
